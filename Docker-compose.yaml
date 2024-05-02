@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: fastapidb
+      DB_USER: fastapiuser
+      DB_PASSWORD: fastapipassword
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=fastapiuser
+      - POSTGRES_PASSWORD=fastapipassword
+      - POSTGRES_DB=fastapidb
